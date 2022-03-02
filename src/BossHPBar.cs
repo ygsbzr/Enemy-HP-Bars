@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace EnemyHPBar;
+﻿namespace EnemyHPBar;
 
 public class BossHPBar : MonoBehaviour {
 	private GameObject bg_go;

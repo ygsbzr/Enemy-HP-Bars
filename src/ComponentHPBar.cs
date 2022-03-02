@@ -115,7 +115,7 @@ public class HPBar : MonoBehaviour {
 		} else {
 			currHP = hm.hp;
 		}
-		Modding.Logger.LogDebug($@"Enemy {name}: currHP {hm.hp}, maxHP {maxHP}");
+		Logger.LogDebug($@"Enemy {name}: currHP {hm.hp}, maxHP {maxHP}");
 		health_bar.fillAmount = hm.hp / maxHP;
 
 		hpbg.fillAmount = currHP / maxHP;
@@ -124,7 +124,7 @@ public class HPBar : MonoBehaviour {
 			SetHPBarAlpha(1);
 		}
 		if (gameObject.name == "New Game Object" && currHP <= 0) {
-			Modding.Logger.LogDebug($@"Placeholder killed");
+			Logger.LogDebug($@"Placeholder killed");
 			Destroy(gameObject);
 		}
 
