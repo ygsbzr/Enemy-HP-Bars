@@ -51,7 +51,7 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod {
 		}
 
 		foreach (string res in Assembly.GetExecutingAssembly().GetManifestResourceNames().Where(t => t.EndsWith("png"))) {
-			string properRes = res.Replace("src.Resources.", "");
+			string properRes = res.Replace("EnemyHPBar.Resources.", "");
 			string resPath = Path.Combine(DATA_DIR, "Default", properRes);
 			if (File.Exists(resPath)) {
 				continue;
