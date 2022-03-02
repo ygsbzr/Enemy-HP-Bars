@@ -39,6 +39,9 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod {
 
 	public override string GetVersion() => Version.Value;
 
+	public EnemyHPBar() =>
+		typeof(EnemyHPBarExport).ModInterop();
+
 	public override void Initialize() {
 		instance = this;
 
@@ -110,7 +113,7 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod {
 		return Sprite.Create(texture2D, new Rect(0, 0, texture2D.width, texture2D.height), Vector2.zero);
 	}
 
-	private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1) => ActiveBosses = new List<string>();
+	private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1) => ActiveBosses = new();
 
 	private void Instance_OnReceiveDeathEventHook(EnemyDeathEffects enemyDeathEffects, bool eventAlreadyRecieved,
 	ref float? attackDirection, ref bool resetDeathEvent, ref bool spellBurn, ref bool isWatery) {

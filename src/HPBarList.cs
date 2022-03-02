@@ -1,6 +1,6 @@
 ﻿using MenuButton = Satchel.BetterMenus.MenuButton;
 
-namespace EnemyHPBar; 
+namespace EnemyHPBar;
 
 public interface ISelectableSkin {
 	/// <summary>

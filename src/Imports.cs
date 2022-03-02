@@ -9,6 +9,9 @@ global using GlobalEnums;
 
 global using Modding;
 
+global using MonoMod.ModInterop;
+
+global using Satchel;
 global using Satchel.BetterMenus;
 
 global using UnityEngine;
