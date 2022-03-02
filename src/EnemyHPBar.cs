@@ -39,6 +39,9 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod {
 
 	public override string GetVersion() => Version.Value;
 
+	public EnemyHPBar() =>
+		typeof(EnemyHPBarExport).ModInterop();
+
 	public override void Initialize() {
 		instance = this;
 
