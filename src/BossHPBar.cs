@@ -1,4 +1,6 @@
-﻿namespace EnemyHPBar;
+﻿using System.Linq;
+
+namespace EnemyHPBar;
 
 public class BossHPBar : MonoBehaviour {
 	private GameObject bg_go;
@@ -64,7 +66,9 @@ public class BossHPBar : MonoBehaviour {
 	}
 
 	public void OnEnable() {
-		EnemyHPBar.ActiveBosses.Add(name);
+		if (!EnemyHPBar.ActiveBosses.Contains(name)) {
+			EnemyHPBar.ActiveBosses.Add(name);
+		}
 	}
 
 	private void SetHPBarAlpha(float alpha) {
