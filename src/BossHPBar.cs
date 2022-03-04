@@ -14,7 +14,6 @@ public class BossHPBar : MonoBehaviour {
 
 	public Image health_bar;
 
-	public float currHP;
 	public float maxHP;
 
 	public int position;
@@ -60,7 +59,6 @@ public class BossHPBar : MonoBehaviour {
 		SetHPBarAlpha(0);
 
 		maxHP = hm.hp;
-		currHP = hm.hp;
 	}
 
 	public void OnEnable() {
@@ -102,11 +100,6 @@ public class BossHPBar : MonoBehaviour {
 
 	private void FixedUpdate() {
 		position = EnemyHPBar.ActiveBosses.IndexOf(gameObject.name) + 1;
-		if (currHP > hm.hp) {
-			currHP -= 0.3f;
-		} else {
-			currHP = hm.hp;
-		}
 
 		Logger.LogFine($@"Enemy {name}: currHP {hm.hp}, maxHP {maxHP}");
 		health_bar.fillAmount = hm.hp / maxHP;
@@ -115,12 +108,12 @@ public class BossHPBar : MonoBehaviour {
 			SetHPBarAlpha(alpha);
 		}
 
-		if (gameObject.name == "New Game Object" && currHP <= 0) {
+		if (gameObject.name == "New Game Object" && hm.hp <= 0) {
 			Destroy(gameObject);
 			Logger.LogDebug($@"Placeholder killed");
 		}
 
-		if (currHP <= 0f) {
+		if (hm.hp <= 0f) {
 			SetHPBarAlpha(0);
 		}
 	}
