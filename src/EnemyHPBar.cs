@@ -1,4 +1,6 @@
-﻿namespace EnemyHPBar;
+﻿using Satchel.Futils;
+
+namespace EnemyHPBar;
 
 public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod {
 	private static readonly Lazy<string> Version = new(() => Assembly
@@ -70,6 +72,7 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod {
 		ModHooks.OnEnableEnemyHook += Instance_OnEnableEnemyHook;
 		ModHooks.OnReceiveDeathEventHook += Instance_OnReceiveDeathEventHook;
 		UnityEngine.SceneManagement.SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+		On.PlayMakerFSM.Start += ModifyFSM;
 
 
 		canvas = CanvasUtil.CreateCanvas(RenderMode.WorldSpace, new Vector2(1920f, 1080f));
@@ -147,30 +150,30 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod {
 			return isAlreadyDead;
 		}
 
+		if (enemy.name.Contains("White Palace Fly")) {
+			return isAlreadyDead;
+		}
+
 		HealthManager hm = enemy.GetComponent<HealthManager>();
 
 		if (hm == null) {
-			return false;
+			return isAlreadyDead;
 		}
 
 		EnemyDeathEffects ede = enemy.GetComponent<EnemyDeathEffects>();
 		EnemyDeathTypes? deathType = ede == null
 			? null
-			: DEATH_FI?.GetValue(ede) as EnemyDeathTypes?;
+			: ReflectionHelper.GetField<EnemyDeathEffects, EnemyDeathTypes>(ede, "enemyDeathType");
 
-		bool isBoss = hm.hp >= 200 || enemy.tag == "Boss" || deathType == EnemyDeathTypes.LargeInfected;
+
+		bool isBoss = hm.hp >= 200 || deathType == EnemyDeathTypes.LargeInfected;
 		if (enemy.GetComponent<BossMarker>() is BossMarker marker) {
 			isBoss = marker.isBoss;
 		}
 
-
-		if (enemy.name.Contains("White Palace Fly")) {
-			return false;
-		}
-
 		if (!isBoss) {
 			HPBar hpbar = hm.gameObject.GetComponent<HPBar>();
-			if (hpbar != null || hm.hp >= 5000 || isAlreadyDead) {
+			if (hpbar != null || hm.hp >= 7000 || isAlreadyDead) {
 				return isAlreadyDead;
 			}
 
@@ -178,7 +181,7 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod {
 			LogDebug($@"Added HP bar to {enemy.name}");
 		} else {
 			BossHPBar bossHpBar = hm.gameObject.GetComponent<BossHPBar>();
-			if (bossHpBar != null || hm.hp >= 5000 || isAlreadyDead) {
+			if (bossHpBar != null || hm.hp >= 7000 || isAlreadyDead) {
 				return isAlreadyDead;
 			}
 
@@ -186,7 +189,53 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod {
 			LogDebug($@"Added Boss HP bar to {enemy.name}");
 		}
 
-		return false;
+		return isAlreadyDead;
+	}
+
+	private static void ModifyFSM(On.PlayMakerFSM.orig_Start orig, PlayMakerFSM self) {
+		orig(self);
+
+		try {
+			GameObject go = self.gameObject;
+
+			if (self is {
+				name: "False Knight New",
+				FsmName: "FalseyControl"
+			}) {
+				EnemyHPBarExport.MarkAsBoss(go);
+			} else if (self.name.StartsWith("Zote Balloon") && self.FsmName == "Control") {
+				self.AddCustomAction("Reset", () => EnemyHPBarExport.RefreshHPBar(go));
+			} else if (self.name.StartsWith("Zote Crew ")) {
+				self.AddCustomAction("Death", () => EnemyHPBarExport.DisableHPBar(go));
+				self.AddCustomAction("Activate", () => EnemyHPBarExport.EnableHPBar(go));
+			} else if (self is {
+				name: "Zote Fluke",
+				FsmName: "Control"
+			}) {
+				self.AddCustomAction("Sleeping", () => EnemyHPBarExport.RefreshHPBar(go));
+			} else if (self is {
+				name: "Zote Salubra",
+				FsmName: "Control"
+			}) {
+				self.AddCustomAction("Death", () => EnemyHPBarExport.RefreshHPBar(go));
+			} else if (self is {
+				name: "Zote Thwomp",
+				FsmName: "Control"
+			}) {
+				EnemyHPBarExport.MarkAsNonBoss(self.gameObject);
+				self.AddCustomAction("Wait", () => EnemyHPBarExport.DisableHPBar(go));
+				self.AddCustomAction("Set Pos", () => EnemyHPBarExport.EnableHPBar(go));
+			} else if (self is {
+				name: "Zote Turrep",
+				FsmName: "Control"
+			}) {
+				EnemyHPBarExport.MarkAsNonBoss(self.gameObject);
+				self.AddCustomAction("Death Pause", () => EnemyHPBarExport.DisableHPBar(go));
+				self.AddCustomAction("Appear", () => EnemyHPBarExport.EnableHPBar(go));
+			}
+		} catch (Exception e) {
+			Logger.LogError(e.ToString());
+		}
 	}
 
 	internal static void GetSkinList() {
@@ -202,7 +251,6 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod {
 
 	public static List<string> ActiveBosses;
 
-	private static readonly FieldInfo DEATH_FI = typeof(EnemyDeathEffects).GetField("enemyDeathType", BindingFlags.NonPublic | BindingFlags.Instance);
 	public static List<ISelectableSkin> SkinList;
 	public ISelectableSkin CurrentSkin;
 	public ISelectableSkin DefaultSkin;

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<AssemblyTitle>EnemyHPBar</AssemblyTitle>
-		<Version>3.0.1</Version>
+		<Version>3.0.2</Version>
 		<Description>A Hollow Knight mod adding a customizable HP bar for all enemies and bosses</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<Copyright>Copyright © 2018-2022</Copyright>
@@ -53,6 +53,10 @@
 		</Reference>
 		<Reference Include="UnityEngine.UIModule">
 			<HintPath>$(HKRefs)/UnityEngine.UIModule.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="MMHOOK_PlayMaker">
+			<HintPath>$(HKModdingApi)/MMHOOK_PlayMaker.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="MonoMod.Utils">
