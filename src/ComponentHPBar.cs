@@ -1,4 +1,4 @@
-﻿// ReSharper disable InconsistentNaming
+// ReSharper disable InconsistentNaming
 
 namespace EnemyHPBar;
 
@@ -111,7 +111,7 @@ public class HPBar : MonoBehaviour {
 
 	private void FixedUpdate() {
 		if (currHP > hm.hp) {
-			currHP -= 0.5f;
+			currHP -= 1f;
 		} else {
 			currHP = hm.hp;
 		}
