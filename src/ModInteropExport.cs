@@ -3,13 +3,22 @@
 [ModExportName(nameof(EnemyHPBar))]
 public static class EnemyHPBarExport {
 	public static void DisableHPBar(GameObject go) {
-		go.RemoveComponent<HPBar>();
-		go.RemoveComponent<BossHPBar>();
+		if (go.GetComponent<HPBar>() is HPBar hpBar) {
+			UObject.Destroy(hpBar);
+		}
+
+		if (go.GetComponent<BossHPBar>() is BossHPBar bossHPBar) {
+			UObject.Destroy(bossHPBar);
+		}
+
 		go.GetAddComponent<DisableHPBar>();
 	}
 
 	public static void EnableHPBar(GameObject go) {
-		go.RemoveComponent<DisableHPBar>();
+		if (go.GetComponent<DisableHPBar>() is DisableHPBar disableHPBar) {
+			UObject.Destroy(disableHPBar);
+		}
+
 		HealthManager hm = go.GetComponent<HealthManager>();
 		hm.enabled = false;
 		hm.enabled = true;
