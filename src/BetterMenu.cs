@@ -8,11 +8,11 @@ internal static class BetterMenu {
 	internal static Menu MenuRef = null;
 
 	internal static MenuScreen GetMenu(MenuScreen lastMenu, ModToggleDelegates? toggleDelegates) {
-		MenuRef ??= PrepareMenu();
+		MenuRef ??= PrepareMenu((ModToggleDelegates)toggleDelegates);
 
 		MenuRef.OnBuilt += (_, Element) => {
-			if (EnemyHPBar.instance.CurrentSkin != null) {
-				BetterMenu.SelectedSkin(EnemyHPBar.instance.CurrentSkin.GetId());
+			if (EnemyHPBar.CurrentSkin != null) {
+				BetterMenu.SelectedSkin(EnemyHPBar.CurrentSkin.GetId());
 			}
 		};
 
@@ -22,18 +22,19 @@ internal static class BetterMenu {
 	internal static void ApplySkin() {
 		ISelectableSkin skinToApply = EnemyHPBar.SkinList[selectedSkin];
 		BetterMenu.SetSkinById(skinToApply.GetId());
-		EnemyHPBar.bossol = EnemyHPBar.instance.HPBarCreateSprite(ResourceLoader.GetBossOutlineImage());
-		EnemyHPBar.bossbg = EnemyHPBar.instance.HPBarCreateSprite(ResourceLoader.GetBossBackgroundImage());
-		EnemyHPBar.bossfg = EnemyHPBar.instance.HPBarCreateSprite(ResourceLoader.GetBossForegroundImage());
-		EnemyHPBar.ol = EnemyHPBar.instance.HPBarCreateSprite(ResourceLoader.GetOutlineImage());
-		EnemyHPBar.fg = EnemyHPBar.instance.HPBarCreateSprite(ResourceLoader.GetForegroundImage());
-		EnemyHPBar.mg = EnemyHPBar.instance.HPBarCreateSprite(ResourceLoader.GetMiddlegroundImage());
-		EnemyHPBar.bg = EnemyHPBar.instance.HPBarCreateSprite(ResourceLoader.GetBackgroundImage());
+		EnemyHPBar.bossol = EnemyHPBar.HPBarCreateSprite(ResourceLoader.GetBossOutlineImage());
+		EnemyHPBar.bossbg = EnemyHPBar.HPBarCreateSprite(ResourceLoader.GetBossBackgroundImage());
+		EnemyHPBar.bossfg = EnemyHPBar.HPBarCreateSprite(ResourceLoader.GetBossForegroundImage());
+		EnemyHPBar.ol = EnemyHPBar.HPBarCreateSprite(ResourceLoader.GetOutlineImage());
+		EnemyHPBar.fg = EnemyHPBar.HPBarCreateSprite(ResourceLoader.GetForegroundImage());
+		EnemyHPBar.mg = EnemyHPBar.HPBarCreateSprite(ResourceLoader.GetMiddlegroundImage());
+		EnemyHPBar.bg = EnemyHPBar.HPBarCreateSprite(ResourceLoader.GetBackgroundImage());
 	}
 
-	internal static string[] GetSkinNameArray() => EnemyHPBar.SkinList.Select(s => HPBarList.MaxLength(s.GetName(), EnemyHPBar.instance.globalSettings.NameLength)).ToArray();
+	internal static string[] GetSkinNameArray() => EnemyHPBar.SkinList.Select(s => HPBarList.MaxLength(s.GetName(), EnemyHPBar.globalSettings.NameLength)).ToArray();
 
-	internal static Menu PrepareMenu() => new Menu("EnemyHPBar", new Element[] {
+	internal static Menu PrepareMenu(ModToggleDelegates toggleDelegates) => new Menu("EnemyHPBar", new Element[] {
+		Blueprints.CreateToggle(toggleDelegates,"HPBar Toggle","","Enabled","Disabled"),
 			new HorizontalOption(
 				"Select Skin", "The skin will be used for current",
 				GetSkinNameArray(),
@@ -55,15 +56,15 @@ internal static class BetterMenu {
 	public static ISelectableSkin GetSkinById(string id) => EnemyHPBar.SkinList.Find(skin => skin.GetId() == id) ?? GetDefaultSkin();
 
 	public static ISelectableSkin GetDefaultSkin() {
-		if (EnemyHPBar.instance.DefaultSkin == null) {
-			EnemyHPBar.instance.DefaultSkin = GetSkinById("Default");
+		if (EnemyHPBar.DefaultSkin == null) {
+			EnemyHPBar.DefaultSkin = GetSkinById("Default");
 		}
-		return EnemyHPBar.instance.DefaultSkin;
+		return EnemyHPBar.DefaultSkin;
 	}
 
 	public static void SetSkinById(string id) {
 		ISelectableSkin Skin = GetSkinById(id);
-		if (EnemyHPBar.instance.CurrentSkin.GetId() == Skin.GetId()) { return; }
-		EnemyHPBar.instance.CurrentSkin = Skin;
+		if (EnemyHPBar.CurrentSkin.GetId() == Skin.GetId()) { return; }
+		EnemyHPBar.CurrentSkin = Skin;
 	}
 }

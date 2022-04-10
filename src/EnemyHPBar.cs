@@ -2,7 +2,7 @@
 
 namespace EnemyHPBar;
 
-public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod {
+public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod,ITogglableMod {
 	private static readonly Lazy<string> Version = new(() => Assembly
 		.GetExecutingAssembly()
 		.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
@@ -12,7 +12,6 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod {
 #endif
 	);
 
-	public static EnemyHPBar instance;
 
 	public static GameObject canvas;
 	public static GameObject bossCanvas;
@@ -45,7 +44,6 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod {
 		typeof(EnemyHPBarExport).ModInterop();
 
 	public override void Initialize() {
-		instance = this;
 
 		if (!Directory.Exists(DATA_DIR)) {
 			Directory.CreateDirectory(DATA_DIR);
@@ -54,18 +52,8 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod {
 		if (!Directory.Exists(Path.Combine(DATA_DIR, "Default"))) {
 			Directory.CreateDirectory(Path.Combine(DATA_DIR, "Default"));
 		}
-
-		foreach (string res in Assembly.GetExecutingAssembly().GetManifestResourceNames().Where(t => t.EndsWith("png"))) {
-			string properRes = res.Replace("EnemyHPBar.Resources.", "");
-			string resPath = Path.Combine(DATA_DIR, "Default", properRes);
-			if (File.Exists(resPath)) {
-				continue;
-			}
-
-			using FileStream file = File.Create(resPath);
-			using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(res);
-			stream.CopyTo(file);
-		}
+		CompleteImage("Default");
+		
 		GetSkinList();
 		LoadLoader();
 
@@ -93,12 +81,12 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod {
 		UObject.DontDestroyOnLoad(bossCanvas);
 	}
 
-	public Settings globalSettings = new();
+	public static Settings globalSettings = new();
 
 	public void OnLoadGlobal(Settings s) => globalSettings = s;
 
 	public Settings OnSaveGlobal() {
-		globalSettings.CurrentSkin = EnemyHPBar.instance.CurrentSkin.GetId();
+		globalSettings.CurrentSkin = EnemyHPBar.CurrentSkin.GetId();
 		return globalSettings;
 	}
 
@@ -109,7 +97,7 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod {
 		}
 	}
 
-	public Sprite HPBarCreateSprite(byte[] data) {
+	public static Sprite HPBarCreateSprite(byte[] data) {
 		var texture2D = new Texture2D(1, 1);
 		texture2D.LoadImage(data);
 		texture2D.anisoLevel = 0;
@@ -245,13 +233,49 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod {
 			string directoryname = new DirectoryInfo(dicts[i]).Name;
 			SkinList.Add(new HPBarList(directoryname));
 		}
-		EnemyHPBar.instance.CurrentSkin = BetterMenu.GetSkinById(EnemyHPBar.instance.globalSettings.CurrentSkin);
+		EnemyHPBar.CurrentSkin = BetterMenu.GetSkinById(EnemyHPBar.globalSettings.CurrentSkin);
 		Logger.Log("Loaded Skins list");
+	}
+	public static void CompleteImage(string skinpath)
+    {
+		foreach (string res in Assembly.GetExecutingAssembly().GetManifestResourceNames().Where(t => t.EndsWith("png")))
+		{
+			string properRes = res.Replace("EnemyHPBar.Resources.", "");
+			string resPath = Path.Combine(DATA_DIR, skinpath, properRes);
+			if (File.Exists(resPath))
+			{
+				continue;
+			}
+
+			using FileStream file = File.Create(resPath);
+			using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(res);
+			stream.CopyTo(file);
+		}
+	}
+	public void Unload()
+    {
+		ModHooks.OnEnableEnemyHook -= Instance_OnEnableEnemyHook;
+		ModHooks.OnReceiveDeathEventHook -= Instance_OnReceiveDeathEventHook;
+		UnityEngine.SceneManagement.SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
+		On.PlayMakerFSM.Start -= ModifyFSM;
+		globalSettings.CurrentSkin = EnemyHPBar.CurrentSkin.GetId();
+		foreach (var go in UObject.FindObjectsOfType<GameObject>())
+        {
+			if (go.GetComponent<HPBar>() is HPBar hpBar)
+			{
+				UObject.Destroy(hpBar);
+			}
+
+			if (go.GetComponent<BossHPBar>() is BossHPBar bossHPBar)
+			{
+				UObject.Destroy(bossHPBar);
+			}
+		}
 	}
 
 	public static List<string> ActiveBosses;
 
 	public static List<ISelectableSkin> SkinList;
-	public ISelectableSkin CurrentSkin;
-	public ISelectableSkin DefaultSkin;
+	public static ISelectableSkin CurrentSkin;
+	public static ISelectableSkin DefaultSkin;
 }

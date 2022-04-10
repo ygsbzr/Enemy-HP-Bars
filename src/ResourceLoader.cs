@@ -1,7 +1,12 @@
 ﻿namespace EnemyHPBar;
 
 internal sealed class ResourceLoader : MonoBehaviour {
-	private static byte[] GetImage(string name) => File.ReadAllBytes(Path.Combine(EnemyHPBar.DATA_DIR, EnemyHPBar.instance.CurrentSkin.GetId(), name));
+	private static byte[] GetImage(string name)
+    {
+		EnemyHPBar.CompleteImage(EnemyHPBar.CurrentSkin.GetId());
+		return File.ReadAllBytes(Path.Combine(EnemyHPBar.DATA_DIR, EnemyHPBar.CurrentSkin.GetId(), name));
+
+	}
 
 	public static byte[] GetBackgroundImage() => GetImage(EnemyHPBar.HPBAR_BG);
 

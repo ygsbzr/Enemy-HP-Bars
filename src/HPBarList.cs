@@ -38,7 +38,7 @@ internal class HPBarList : ISelectableSkin {
 	internal static string MaxLength(string skinName, int length) => skinName.Length <= length ? skinName : skinName.Substring(0, length - 3) + "...";
 	internal static MenuButton ApplySkinButton(int index) {
 
-		string ButtonText = MaxLength(EnemyHPBar.SkinList[index].GetName(), EnemyHPBar.instance.globalSettings.NameLength);
+		string ButtonText = MaxLength(EnemyHPBar.SkinList[index].GetName(), EnemyHPBar.globalSettings.NameLength);
 		return new MenuButton(ButtonText, "", (mb) => {
 			if (!applying) {
 				applying = true;

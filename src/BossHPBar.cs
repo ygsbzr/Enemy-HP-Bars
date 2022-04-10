@@ -8,9 +8,9 @@ public class BossHPBar : MonoBehaviour {
 	private CanvasRenderer fg_cr;
 	private CanvasRenderer ol_cr;
 
-	private readonly float bossbgScale = EnemyHPBar.instance.globalSettings.bossbgScale;
-	private readonly float bossfgScale = EnemyHPBar.instance.globalSettings.bossfgScale;
-	private readonly float bossolScale = EnemyHPBar.instance.globalSettings.bossolScale;
+	private readonly float bossbgScale = EnemyHPBar.globalSettings.bossbgScale;
+	private readonly float bossfgScale = EnemyHPBar.globalSettings.bossfgScale;
+	private readonly float bossolScale = EnemyHPBar.globalSettings.bossolScale;
 
 	public Image health_bar;
 

@@ -20,9 +20,9 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<HKRefs Condition="$(HKRefs) == ''">../HKManaged/</HKRefs>
+		<HKRefs Condition="$(HKRefs) == ''">D:\HKmod\1.5Moddingapi\</HKRefs>
 		<HKModdingApi Condition="$(HKModdingApi) == ''">$(HKRefs)</HKModdingApi>
-		<HKModRefs Condition="$(HKModRefs) == ''">$(HKRefs)/Mods</HKModRefs>
+		<HKModRefs Condition="$(HKModRefs) == ''">$(HKRefs)</HKModRefs>
 		<HKModOutputPath Condition="$(HKModOutputPath) == ''">$(HKModRefs)</HKModOutputPath>
 	</PropertyGroup>
 
@@ -34,6 +34,9 @@
 		<Reference Include="Assembly-CSharp">
 			<HintPath>$(HKModdingApi)/Assembly-CSharp.dll</HintPath>
 			<Private>false</Private>
+		</Reference>
+		<Reference Include="Satchel">
+		  <HintPath>..\..\1.5Moddingapi\Satchel.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine">
 			<HintPath>$(HKRefs)/UnityEngine.dll</HintPath>
@@ -65,10 +68,6 @@
 		</Reference>
 		<Reference Include="PlayMaker">
 			<HintPath>$(HKRefs)/PlayMaker.dll</HintPath>
-			<Private>false</Private>
-		</Reference>
-		<Reference Include="Satchel">
-			<HintPath>$(HKModRefs)/Satchel/Satchel.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 	</ItemGroup>

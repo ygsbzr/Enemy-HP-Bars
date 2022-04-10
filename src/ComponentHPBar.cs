@@ -12,10 +12,10 @@ public class HPBar : MonoBehaviour {
 	private CanvasRenderer mg_cr;
 	private CanvasRenderer ol_cr;
 
-	private readonly float bgScale = EnemyHPBar.instance.globalSettings.bgScale;
-	private readonly float fgScale = EnemyHPBar.instance.globalSettings.fgScale;
-	private readonly float olScale = EnemyHPBar.instance.globalSettings.olScale;
-	private readonly float mgScale = EnemyHPBar.instance.globalSettings.mgScale;
+	private readonly float bgScale = EnemyHPBar.globalSettings.bgScale;
+	private readonly float fgScale = EnemyHPBar.globalSettings.fgScale;
+	private readonly float olScale = EnemyHPBar.globalSettings.olScale;
+	private readonly float mgScale = EnemyHPBar.globalSettings.mgScale;
 
 	public Image health_bar;
 	public Image hpbg;
