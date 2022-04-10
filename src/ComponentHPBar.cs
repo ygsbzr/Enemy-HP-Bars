@@ -98,6 +98,8 @@ public class HPBar : MonoBehaviour {
 		ol_go.transform.position = position;
 	}
 
+#pragma warning disable IDE0051
+
 	private void OnDestroy() {
 		SetHPBarAlpha(0);
 		DestroyHPBar();
@@ -115,6 +117,7 @@ public class HPBar : MonoBehaviour {
 		} else {
 			currHP = hm.hp;
 		}
+
 		Logger.LogDebug($@"Enemy {name}: currHP {hm.hp}, maxHP {maxHP}");
 		health_bar.fillAmount = hm.hp / maxHP;
 
@@ -123,6 +126,7 @@ public class HPBar : MonoBehaviour {
 		if (health_bar.fillAmount < 1f) {
 			SetHPBarAlpha(1);
 		}
+
 		if (gameObject.name == "New Game Object" && currHP <= 0) {
 			Logger.LogDebug($@"Placeholder killed");
 			Destroy(gameObject);
@@ -138,4 +142,6 @@ public class HPBar : MonoBehaviour {
 		objectPos = transform.position + (Vector3.up * 1.5f);
 		MoveHPBar(objectPos);
 	}
+
+#pragma warning restore IDE0051
 }

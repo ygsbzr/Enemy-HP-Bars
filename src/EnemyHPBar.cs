@@ -273,7 +273,7 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod,IToggla
 		}
 	}
 
-	public static List<string> ActiveBosses;
+	public static List<GameObject> ActiveBosses;
 
 	public static List<ISelectableSkin> SkinList;
 	public static ISelectableSkin CurrentSkin;

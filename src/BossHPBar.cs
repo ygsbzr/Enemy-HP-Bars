@@ -1,4 +1,4 @@
-﻿namespace EnemyHPBar;
+namespace EnemyHPBar;
 
 public class BossHPBar : MonoBehaviour {
 	private GameObject bg_go;
@@ -61,13 +61,13 @@ public class BossHPBar : MonoBehaviour {
 		maxHP = hm.hp;
 	}
 
-	public void OnEnable() {
-		if (!EnemyHPBar.ActiveBosses.Contains(name)) {
-			EnemyHPBar.ActiveBosses.Add(name);
-		}
-	}
-
 	private void SetHPBarAlpha(float alpha) {
+		if (alpha <= 0f) {
+			EnemyHPBar.ActiveBosses.Remove(gameObject);
+		} else if (!EnemyHPBar.ActiveBosses.Contains(gameObject)) {
+			EnemyHPBar.ActiveBosses.Add(gameObject);
+		}
+
 		bg_cr.SetAlpha(alpha);
 		fg_cr.SetAlpha(alpha);
 		ol_cr.SetAlpha(alpha);
@@ -86,6 +86,8 @@ public class BossHPBar : MonoBehaviour {
 		ol_go.transform.position = position;
 	}
 
+#pragma warning disable IDE0051
+
 	private void OnDestroy() {
 		SetHPBarAlpha(0);
 		DestroyHPBar();
@@ -93,13 +95,12 @@ public class BossHPBar : MonoBehaviour {
 	}
 
 	private void OnDisable() {
-		EnemyHPBar.ActiveBosses.Remove(name);
 		SetHPBarAlpha(0);
 		Logger.LogDebug($@"Disabled enemy {gameObject.name}");
 	}
 
 	private void FixedUpdate() {
-		position = EnemyHPBar.ActiveBosses.IndexOf(gameObject.name) + 1;
+		position = EnemyHPBar.ActiveBosses.IndexOf(gameObject) + 1;
 
 		Logger.LogFine($@"Enemy {name}: currHP {hm.hp}, maxHP {maxHP}");
 		health_bar.fillAmount = hm.hp / maxHP;
@@ -119,7 +120,9 @@ public class BossHPBar : MonoBehaviour {
 	}
 
 	private void LateUpdate() {
-		position = EnemyHPBar.ActiveBosses.IndexOf(gameObject.name);
+		position = EnemyHPBar.ActiveBosses.IndexOf(gameObject);
 		MoveHPBar(new Vector2(objectPos.x, objectPos.y + (position * 30f)));
 	}
+
+#pragma warning restore IDE0051
 }
