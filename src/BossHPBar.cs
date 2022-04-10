@@ -1,4 +1,4 @@
-namespace EnemyHPBar;
+﻿namespace EnemyHPBar;
 
 public class BossHPBar : MonoBehaviour {
 	private GameObject bg_go;
@@ -24,7 +24,8 @@ public class BossHPBar : MonoBehaviour {
 	public void Awake() {
 		Logger.LogDebug($@"Creating Boss HP Bar for {name}");
 
-		screenScale = new Vector2(Screen.width / 1280f, Screen.height / 720f);
+		Camera camera = GameCameras.instance.mainCamera;
+		screenScale = new Vector2(camera.pixelWidth / 1280f, camera.pixelHeight / 720f);
 
 		bg_go = CanvasUtil.CreateImagePanel(EnemyHPBar.bossCanvas, EnemyHPBar.bossbg,
 			new CanvasUtil.RectData(Vector2.Scale(new Vector2(EnemyHPBar.bossbg.texture.width, EnemyHPBar.bossbg
@@ -105,7 +106,7 @@ public class BossHPBar : MonoBehaviour {
 		Logger.LogFine($@"Enemy {name}: currHP {hm.hp}, maxHP {maxHP}");
 		health_bar.fillAmount = hm.hp / maxHP;
 		if (health_bar.fillAmount < 1f && health_bar.fillAmount > 0f) {
-			float alpha = GameManager.instance.gameState == GameState.PAUSED ? 0.8f : 1;
+			float alpha = GameManager.instance.gameState == GameState.PAUSED ? 0.5f : 1;
 			SetHPBarAlpha(alpha);
 		}
 

@@ -34,7 +34,8 @@ public class HPBar : MonoBehaviour {
 
 		// On.CameraController.FadeOut += CameraController_FadeOut;
 
-		screenScale = new Vector2(Screen.width / 1280f * 0.025f, Screen.height / 720f * 0.025f);
+		Camera camera = GameCameras.instance.mainCamera;
+		screenScale = new Vector2(camera.pixelWidth / 1280f * 0.025f, camera.pixelHeight / 720f * 0.025f);
 
 		bg_go = CanvasUtil.CreateImagePanel(EnemyHPBar.canvas, EnemyHPBar.bg,
 			new CanvasUtil.RectData(Vector2.Scale(new Vector2(EnemyHPBar.bg.texture.width, EnemyHPBar.bg.texture
