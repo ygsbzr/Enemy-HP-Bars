@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<AssemblyTitle>EnemyHPBar</AssemblyTitle>
-		<Version>3.0.2</Version>
+		<Version>3.0.4</Version>
 		<Description>A Hollow Knight mod adding a customizable HP bar for all enemies and bosses</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<Copyright>Copyright © 2018-2022</Copyright>

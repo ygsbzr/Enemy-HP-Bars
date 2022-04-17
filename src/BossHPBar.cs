@@ -115,7 +115,7 @@ public class BossHPBar : MonoBehaviour {
 			Logger.LogDebug($@"Placeholder killed");
 		}
 
-		if (hm.hp <= 0f) {
+		if (hm.hp <= 0f && !hm.hasSpecialDeath) {
 			SetHPBarAlpha(0);
 		}
 	}
