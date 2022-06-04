@@ -12,6 +12,7 @@ public sealed class Settings {
 
 	public int NameLength = 10;
 
+	public bool Intergration = false;
 	public string DefaultSkin { get; set; } = "Default";
 	public string CurrentSkin { get; set; } = "Default";
 }

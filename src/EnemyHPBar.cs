@@ -1,5 +1,5 @@
 ﻿using Satchel.Futils;
-
+using CustomKnight;
 namespace EnemyHPBar;
 
 public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod,ITogglableMod {
@@ -52,7 +52,7 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod,IToggla
 		if (!Directory.Exists(Path.Combine(DATA_DIR, "Default"))) {
 			Directory.CreateDirectory(Path.Combine(DATA_DIR, "Default"));
 		}
-		CompleteImage("Default");
+		CompleteImage(Path.Combine(DATA_DIR,"Default"));
 		
 		GetSkinList();
 		LoadLoader();
@@ -76,12 +76,38 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod,IToggla
 		fg = HPBarCreateSprite(ResourceLoader.GetForegroundImage());
 		mg = HPBarCreateSprite(ResourceLoader.GetMiddlegroundImage());
 		bg = HPBarCreateSprite(ResourceLoader.GetBackgroundImage());
-
+		
 		UObject.DontDestroyOnLoad(canvas);
 		UObject.DontDestroyOnLoad(bossCanvas);
-	}
+		if(ModHooks.GetMod("CustomKnight") is Mod)
+        {
+			AddCKHandle();
+        }
 
-	public static Settings globalSettings = new();
+	}
+	private void AddCKHandle()
+    {
+        SkinManager.OnSetSkin += ChangeSkin;
+    }
+
+    private void ChangeSkin(object sender, EventArgs e)
+    {
+        if(Directory.Exists(Path.Combine(SkinManager.GetCurrentSkin().getSwapperPath(), "HPBar")))
+        {
+			if(globalSettings.Intergration)
+            {
+				bossol = HPBarCreateSprite(ResourceLoader.GetCKImage(HPBAR_BOSSOL));
+				bossbg = HPBarCreateSprite(ResourceLoader.GetCKImage(HPBAR_BOSSBG));
+				bossfg = HPBarCreateSprite(ResourceLoader.GetCKImage(HPBAR_BOSSFG));
+				ol = HPBarCreateSprite(ResourceLoader.GetCKImage(HPBAR_OL));
+				fg = HPBarCreateSprite(ResourceLoader.GetCKImage(HPBAR_FG));
+				mg = HPBarCreateSprite(ResourceLoader.GetCKImage(HPBAR_MG));
+				bg = HPBarCreateSprite(ResourceLoader.GetCKImage(HPBAR_BG));
+			}
+		}
+    }
+
+    public static Settings globalSettings = new();
 
 	public void OnLoadGlobal(Settings s) => globalSettings = s;
 
@@ -241,7 +267,7 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod,IToggla
 		foreach (string res in Assembly.GetExecutingAssembly().GetManifestResourceNames().Where(t => t.EndsWith("png")))
 		{
 			string properRes = res.Replace("EnemyHPBar.Resources.", "");
-			string resPath = Path.Combine(DATA_DIR, skinpath, properRes);
+			string resPath = Path.Combine(skinpath, properRes);
 			if (File.Exists(resPath))
 			{
 				continue;

@@ -41,6 +41,14 @@ internal static class BetterMenu {
 				(setting) => { selectedSkin = setting; },
 				() => selectedSkin,
 				Id: "SelectSkinOption"),
+			new HorizontalOption(
+				"Intergration","Intergration with CK?(Make sure you install CK if you want to use it,and reset skin whenyou turn it to true),Create a folder named “HPBar” in your skin folder",
+				new string[]{"True","False"},
+                (choose)=>{EnemyHPBar.globalSettings.Intergration=(choose==0); },
+                ()=>EnemyHPBar.globalSettings.Intergration?0:1,
+				Id:"CKIntergration"
+				)
+			,
 			new MenuRow(
 				new List<Element>{
 					Blueprints.NavigateToMenu( "Skin List","Opens a list of Skins", () => HPBarList.GetMenu(MenuRef.menuScreen)),
