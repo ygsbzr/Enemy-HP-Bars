@@ -119,7 +119,7 @@ public class HPBar : MonoBehaviour {
 			currHP = hm.hp;
 		}
 
-		Logger.LogDebug($@"Enemy {name}: currHP {hm.hp}, maxHP {maxHP}");
+		Logger.LogFine($@"Enemy {name}: currHP {hm.hp}, maxHP {maxHP}");
 		health_bar.fillAmount = hm.hp / maxHP;
 
 		hpbg.fillAmount = currHP / maxHP;
