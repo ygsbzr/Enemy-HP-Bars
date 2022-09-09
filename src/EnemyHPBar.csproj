@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<AssemblyTitle>EnemyHPBar</AssemblyTitle>
-		<Version>3.0.5</Version>
+		<Version>3.0.6</Version>
 		<Description>A Hollow Knight mod adding a customizable HP bar for all enemies and bosses</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<Copyright>Copyright © 2018-2022</Copyright>
@@ -85,7 +85,12 @@
 
 		<Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb;$(SolutionDir)/LICENSE" DestinationFolder="$(SolutionDir)/dist/tmp" />
 		<ZipDirectory SourceDirectory="$(SolutionDir)/dist/tmp" DestinationFile="$(SolutionDir)/dist/$(TargetName)-v$(Version).zip" />
-
 		<RemoveDir Directories="$(SolutionDir)/dist/tmp" />
+		<GetFileHash Files="$(SolutionDir)/dist/$(TargetName)-v$(Version).zip" Algorithm="SHA256">
+			<Output TaskParameter="Items" ItemName="FilesWithHashes" />
+		</GetFileHash>
+		<Message Importance="High" Text="@(FilesWithHashes->'%(Identity): %(FileHash)')" />
+
+
 	</Target>
 </Project>
