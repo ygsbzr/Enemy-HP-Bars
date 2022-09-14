@@ -22,7 +22,7 @@ internal sealed class ResourceLoader : MonoBehaviour {
 		Sprite[] sprites = new Sprite[imagenames.Length];
 		foreach (var imagename in imagenames)
 		{
-			_ = int.TryParse(imagename.Substring(imagename.Length - 5, 1), out int num);
+			_ = int.TryParse(AnimJson.FilterExtension(imagename.Substring(imagename.IndexOf("_") + 1)), out int num);
 			sprites[num] = EnemyHPBar.HPBarCreateSprite(File.ReadAllBytes(imagename));
 		}
 		return sprites;
