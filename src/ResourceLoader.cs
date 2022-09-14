@@ -1,4 +1,4 @@
-﻿namespace EnemyHPBar;
+namespace EnemyHPBar;
 using CustomKnight;
 internal sealed class ResourceLoader : MonoBehaviour {
 	private static byte[] GetImage(string name)
@@ -16,6 +16,18 @@ internal sealed class ResourceLoader : MonoBehaviour {
         }
 		return GetImage(name);
     }
+	public static Sprite[] GetAllImages(string name)
+	{
+		var imagenames = Directory.GetFiles(EnemyHPBar.SkinPath, $"{AnimJson.FilterExtension(name)}_*.png");
+		Sprite[] sprites = new Sprite[imagenames.Length];
+		foreach (var imagename in imagenames)
+		{
+			_ = int.TryParse(imagename.Substring(imagename.Length - 5, 1), out int num);
+			sprites[num] = EnemyHPBar.HPBarCreateSprite(File.ReadAllBytes(imagename));
+		}
+		return sprites;
+
+	}
 	public static byte[] GetBackgroundImage() => GetImage(EnemyHPBar.HPBAR_BG);
 
 	public static byte[] GetForegroundImage() => GetImage(EnemyHPBar.HPBAR_FG);

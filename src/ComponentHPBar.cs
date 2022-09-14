@@ -55,7 +55,6 @@ public class HPBar : MonoBehaviour {
 		fg_cr = fg_go.GetComponent<CanvasRenderer>();
 		mg_cr = mg_go.GetComponent<CanvasRenderer>();
 		ol_cr = ol_go.GetComponent<CanvasRenderer>();
-
 		hpbg = mg_go.GetComponent<Image>();
 		hpbg.type = Image.Type.Filled;
 		hpbg.fillMethod = Image.FillMethod.Horizontal;
@@ -65,7 +64,6 @@ public class HPBar : MonoBehaviour {
 		health_bar.type = Image.Type.Filled;
 		health_bar.fillMethod = Image.FillMethod.Horizontal;
 		health_bar.preserveAspect = false;
-
 		bg_go.GetComponent<Image>().preserveAspect = false;
 		ol_go.GetComponent<Image>().preserveAspect = false;
 
@@ -74,6 +72,18 @@ public class HPBar : MonoBehaviour {
 		SetHPBarAlpha(0);
 		maxHP = hm.hp;
 		currHP = hm.hp;
+		if (EnemyHPBar.bganim.frame > 0) {
+			bg_go.GetAddComponent<HPBarAnimationController>().Init(EnemyHPBar.bganim);
+		}
+		if (EnemyHPBar.fganim.frame > 0) {
+			fg_go.GetAddComponent<HPBarAnimationController>().Init(EnemyHPBar.fganim);
+		}
+		if (EnemyHPBar.mganim.frame > 0) {
+			mg_go.GetAddComponent<HPBarAnimationController>().Init(EnemyHPBar.mganim);
+		}
+		if (EnemyHPBar.olanim.frame > 0) {
+			ol_go.GetAddComponent<HPBarAnimationController>().Init(EnemyHPBar.olanim);
+		}
 	}
 
 	private void SetHPBarAlpha(float alpha) {

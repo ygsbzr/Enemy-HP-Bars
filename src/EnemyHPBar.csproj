@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<AssemblyTitle>EnemyHPBar</AssemblyTitle>
-		<Version>3.0.6</Version>
+		<Version>3.0.7</Version>
 		<Description>A Hollow Knight mod adding a customizable HP bar for all enemies and bosses</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<Copyright>Copyright © 2018-2022</Copyright>
@@ -36,10 +36,13 @@
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="CustomKnight">
-		  <HintPath>..\..\1.5Moddingapi\CustomKnight.dll</HintPath>
+		  <HintPath>$(HKRefs)/CustomKnight.dll</HintPath>
+		</Reference>
+		<Reference Include="Newtonsoft.Json">
+		  <HintPath>$(HKRefs)/Newtonsoft.Json.dll</HintPath>
 		</Reference>
 		<Reference Include="Satchel">
-		  <HintPath>..\..\1.5Moddingapi\Satchel.dll</HintPath>
+		  <HintPath>$(HKRefs)/Satchel.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine">
 			<HintPath>$(HKRefs)/UnityEngine.dll</HintPath>

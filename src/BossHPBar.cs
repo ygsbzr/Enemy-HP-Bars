@@ -1,4 +1,4 @@
-﻿namespace EnemyHPBar;
+namespace EnemyHPBar;
 
 public class BossHPBar : MonoBehaviour {
 	private GameObject bg_go;
@@ -60,6 +60,15 @@ public class BossHPBar : MonoBehaviour {
 		SetHPBarAlpha(0);
 
 		maxHP = hm.hp;
+		if (EnemyHPBar.bossbganim.frame > 0) {
+			bg_go.GetAddComponent<HPBarAnimationController>().Init(EnemyHPBar.bossbganim);
+		}
+		if (EnemyHPBar.bossfganim.frame > 0) {
+			fg_go.GetAddComponent<HPBarAnimationController>().Init(EnemyHPBar.bossfganim);
+		}
+		if (EnemyHPBar.bossolanim.frame > 0) {
+			ol_go.GetAddComponent<HPBarAnimationController>().Init(EnemyHPBar.bossolanim);
+		}
 	}
 
 	private void SetHPBarAlpha(float alpha) {
