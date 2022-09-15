@@ -1,5 +1,7 @@
-﻿namespace EnemyHPBar;
+namespace EnemyHPBar;
 using CustomKnight;
+
+using System.Text.RegularExpressions;
 internal sealed class ResourceLoader : MonoBehaviour {
 	private static byte[] GetImage(string name)
     {
@@ -16,6 +18,19 @@ internal sealed class ResourceLoader : MonoBehaviour {
         }
 		return GetImage(name);
     }
+	public static Sprite[] GetAllImages(string name)
+	{
+		var imagenames = Directory.GetFiles(EnemyHPBar.SkinPath, $"{AnimJson.FilterExtension(name)}_*.png");
+		Sprite[] sprites = new Sprite[imagenames.Length];
+		foreach (var imagename in imagenames)
+		{
+			_ = int.TryParse(Regex.Match(imagename,".*_([0-9]*).png").Groups[1].Value, out int num);
+			Logger.LogDebug($"num:{num}");
+			sprites[num] = EnemyHPBar.HPBarCreateSprite(File.ReadAllBytes(imagename));
+		}
+		return sprites;
+
+	}
 	public static byte[] GetBackgroundImage() => GetImage(EnemyHPBar.HPBAR_BG);
 
 	public static byte[] GetForegroundImage() => GetImage(EnemyHPBar.HPBAR_FG);

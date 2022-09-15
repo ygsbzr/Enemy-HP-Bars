@@ -1,4 +1,4 @@
-﻿using Satchel.Futils;
+using Satchel.Futils;
 using CustomKnight;
 namespace EnemyHPBar;
 
@@ -16,6 +16,7 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod,IToggla
 	public static GameObject canvas;
 	public static GameObject bossCanvas;
 	private static GameObject spriteLoader;
+	public static bool InstallCK = false;
 
 	public const string HPBAR_BG = "bg.png";
 	public const string HPBAR_FG = "fg.png";
@@ -27,6 +28,12 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod,IToggla
 	public const string SPRITE_FOLDER = "CustomHPBar";
 
 	public static readonly string DATA_DIR = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), SPRITE_FOLDER);
+	public static string SkinPath { get { 
+			if (InstallCK && globalSettings.Intergration) {
+				return Path.Combine(SkinManager.GetCurrentSkin().getSwapperPath(), "HPBar");
+			}
+			return Path.Combine(EnemyHPBar.DATA_DIR, EnemyHPBar.CurrentSkin.GetId());
+		} }
 
 	public static Sprite bg;
 	public static Sprite mg;
@@ -76,13 +83,17 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod,IToggla
 		fg = HPBarCreateSprite(ResourceLoader.GetForegroundImage());
 		mg = HPBarCreateSprite(ResourceLoader.GetMiddlegroundImage());
 		bg = HPBarCreateSprite(ResourceLoader.GetBackgroundImage());
-		
 		UObject.DontDestroyOnLoad(canvas);
 		UObject.DontDestroyOnLoad(bossCanvas);
-		if(ModHooks.GetMod("CustomKnight") is Mod)
+		InstallCK = ModHooks.GetMod("CustomKnight") is Mod;
+		if (InstallCK)
         {
 			AddCKHandle();
         }
+		AnimJson.animdic.Clear();
+		AnimJson.Initdic();
+		AnimJson.LoadAllConfig();
+		AnimJson.SaveAllConfig();
 
 	}
 	private void AddCKHandle()
@@ -103,6 +114,10 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod,IToggla
 				fg = HPBarCreateSprite(ResourceLoader.GetCKImage(HPBAR_FG));
 				mg = HPBarCreateSprite(ResourceLoader.GetCKImage(HPBAR_MG));
 				bg = HPBarCreateSprite(ResourceLoader.GetCKImage(HPBAR_BG));
+				AnimJson.animdic.Clear();
+				AnimJson.Initdic();
+				AnimJson.LoadAllConfig();
+				AnimJson.SaveAllConfig();
 			}
 		}
     }

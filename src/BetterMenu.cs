@@ -1,4 +1,4 @@
-﻿using MenuButton = Satchel.BetterMenus.MenuButton;
+using MenuButton = Satchel.BetterMenus.MenuButton;
 
 namespace EnemyHPBar;
 
@@ -29,6 +29,10 @@ internal static class BetterMenu {
 		EnemyHPBar.fg = EnemyHPBar.HPBarCreateSprite(ResourceLoader.GetForegroundImage());
 		EnemyHPBar.mg = EnemyHPBar.HPBarCreateSprite(ResourceLoader.GetMiddlegroundImage());
 		EnemyHPBar.bg = EnemyHPBar.HPBarCreateSprite(ResourceLoader.GetBackgroundImage());
+		AnimJson.animdic.Clear();
+		AnimJson.Initdic();
+		AnimJson.LoadAllConfig();
+		AnimJson.SaveAllConfig();
 	}
 
 	internal static string[] GetSkinNameArray() => EnemyHPBar.SkinList.Select(s => HPBarList.MaxLength(s.GetName(), EnemyHPBar.globalSettings.NameLength)).ToArray();
