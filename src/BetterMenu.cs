@@ -29,6 +29,8 @@ internal static class BetterMenu {
 		EnemyHPBar.fg = EnemyHPBar.HPBarCreateSprite(ResourceLoader.GetForegroundImage());
 		EnemyHPBar.mg = EnemyHPBar.HPBarCreateSprite(ResourceLoader.GetMiddlegroundImage());
 		EnemyHPBar.bg = EnemyHPBar.HPBarCreateSprite(ResourceLoader.GetBackgroundImage());
+		AnimJson.animdic.Clear();
+		AnimJson.Initdic();
 		AnimJson.LoadAllConfig();
 		AnimJson.SaveAllConfig();
 	}

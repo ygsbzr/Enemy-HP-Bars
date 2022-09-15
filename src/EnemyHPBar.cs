@@ -42,13 +42,6 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod,IToggla
 	public static Sprite bossbg;
 	public static Sprite bossfg;
 	public static Sprite bossol;
-	public static HPBarAnimation bganim;
-	public static HPBarAnimation mganim;
-	public static HPBarAnimation fganim;
-	public static HPBarAnimation olanim;
-	public static HPBarAnimation bossbganim;
-	public static HPBarAnimation bossfganim;
-	public static HPBarAnimation bossolanim;
 	public bool ToggleButtonInsideMenu { get; } = true;
 	public MenuScreen GetMenuScreen(MenuScreen modListMenu, ModToggleDelegates? toggle) => BetterMenu.GetMenu(modListMenu, toggle);
 
@@ -90,8 +83,6 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod,IToggla
 		fg = HPBarCreateSprite(ResourceLoader.GetForegroundImage());
 		mg = HPBarCreateSprite(ResourceLoader.GetMiddlegroundImage());
 		bg = HPBarCreateSprite(ResourceLoader.GetBackgroundImage());
-		AnimJson.LoadAllConfig();
-		AnimJson.SaveAllConfig();
 		UObject.DontDestroyOnLoad(canvas);
 		UObject.DontDestroyOnLoad(bossCanvas);
 		InstallCK = ModHooks.GetMod("CustomKnight") is Mod;
@@ -99,6 +90,10 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod,IToggla
         {
 			AddCKHandle();
         }
+		AnimJson.animdic.Clear();
+		AnimJson.Initdic();
+		AnimJson.LoadAllConfig();
+		AnimJson.SaveAllConfig();
 
 	}
 	private void AddCKHandle()
@@ -119,6 +114,8 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod,IToggla
 				fg = HPBarCreateSprite(ResourceLoader.GetCKImage(HPBAR_FG));
 				mg = HPBarCreateSprite(ResourceLoader.GetCKImage(HPBAR_MG));
 				bg = HPBarCreateSprite(ResourceLoader.GetCKImage(HPBAR_BG));
+				AnimJson.animdic.Clear();
+				AnimJson.Initdic();
 				AnimJson.LoadAllConfig();
 				AnimJson.SaveAllConfig();
 			}

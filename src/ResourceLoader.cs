@@ -1,5 +1,7 @@
 namespace EnemyHPBar;
 using CustomKnight;
+
+using System.Text.RegularExpressions;
 internal sealed class ResourceLoader : MonoBehaviour {
 	private static byte[] GetImage(string name)
     {
@@ -22,7 +24,8 @@ internal sealed class ResourceLoader : MonoBehaviour {
 		Sprite[] sprites = new Sprite[imagenames.Length];
 		foreach (var imagename in imagenames)
 		{
-			_ = int.TryParse(AnimJson.FilterExtension(imagename.Substring(imagename.IndexOf("_") + 1)), out int num);
+			_ = int.TryParse(Regex.Match(imagename,".*_([0-9]*).png").Groups[1].Value, out int num);
+			Logger.LogDebug($"num:{num}");
 			sprites[num] = EnemyHPBar.HPBarCreateSprite(File.ReadAllBytes(imagename));
 		}
 		return sprites;

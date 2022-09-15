@@ -4,8 +4,6 @@ namespace EnemyHPBar;
 public class HPBarAnimation {
 	public float fps;
 	public bool loop;
-	public int frame;
-	public string name;
 }
 public class HPBarAnimationController:MonoBehaviour {
 	public HPBarAnimation anim;
@@ -50,11 +48,9 @@ public static class CustomHPBarAnimation {
 	/// All currently loaded Sprites
 	/// </summary>
 	public static Dictionary<HPBarAnimation, Sprite[]> loadedSprites = new Dictionary<HPBarAnimation, Sprite[]>();
-	public static HPBarAnimation LoadAnimation(string name, Sprite[] sprites) {
+	public static HPBarAnimation LoadAnimation(Sprite[] sprites) {
 		var anim = new HPBarAnimation {
-			name = name,
 			fps = 1,
-			frame = sprites.Length,
 			loop = true
 		};
 	loadedSprites[anim] = sprites;

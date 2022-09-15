@@ -72,17 +72,17 @@ public class HPBar : MonoBehaviour {
 		SetHPBarAlpha(0);
 		maxHP = hm.hp;
 		currHP = hm.hp;
-		if (EnemyHPBar.bganim.frame > 0) {
-			bg_go.GetAddComponent<HPBarAnimationController>().Init(EnemyHPBar.bganim);
+		if (AnimJson.Animexists("bg")) {
+			bg_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animdic["bg"]);
 		}
-		if (EnemyHPBar.fganim.frame > 0) {
-			fg_go.GetAddComponent<HPBarAnimationController>().Init(EnemyHPBar.fganim);
+		if (AnimJson.Animexists("fg")) {
+			fg_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animdic["fg"]);
 		}
-		if (EnemyHPBar.mganim.frame > 0) {
-			mg_go.GetAddComponent<HPBarAnimationController>().Init(EnemyHPBar.mganim);
+		if (AnimJson.Animexists("mg")) {
+			mg_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animdic["mg"]);
 		}
-		if (EnemyHPBar.olanim.frame > 0) {
-			ol_go.GetAddComponent<HPBarAnimationController>().Init(EnemyHPBar.olanim);
+		if (AnimJson.Animexists("ol")) {
+			ol_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animdic["ol"]);
 		}
 	}
 

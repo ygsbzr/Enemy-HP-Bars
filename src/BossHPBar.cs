@@ -60,14 +60,14 @@ public class BossHPBar : MonoBehaviour {
 		SetHPBarAlpha(0);
 
 		maxHP = hm.hp;
-		if (EnemyHPBar.bossbganim.frame > 0) {
-			bg_go.GetAddComponent<HPBarAnimationController>().Init(EnemyHPBar.bossbganim);
+		if (AnimJson.Animexists("bossbg")) {
+			bg_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animdic["bossbg"]);
 		}
-		if (EnemyHPBar.bossfganim.frame > 0) {
-			fg_go.GetAddComponent<HPBarAnimationController>().Init(EnemyHPBar.bossfganim);
+		if (AnimJson.Animexists("bossfg")) {
+			fg_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animdic["bossfg"]);
 		}
-		if (EnemyHPBar.bossolanim.frame > 0) {
-			ol_go.GetAddComponent<HPBarAnimationController>().Init(EnemyHPBar.bossolanim);
+		if (AnimJson.Animexists("bossol")) {
+			ol_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animdic["bossol"]);
 		}
 	}
 
