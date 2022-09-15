@@ -86,7 +86,7 @@
 		<RemoveDir Directories="$(SolutionDir)/dist" />
 		<MakeDir Directories="$(SolutionDir)/dist/tmp" />
 
-		<Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb;$(SolutionDir)/LICENSE" DestinationFolder="$(SolutionDir)/dist/tmp" />
+		<Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb;$(SolutionDir)/LICENSE;$(SolutionDir)/README.md" DestinationFolder="$(SolutionDir)/dist/tmp" />
 		<ZipDirectory SourceDirectory="$(SolutionDir)/dist/tmp" DestinationFile="$(SolutionDir)/dist/$(TargetName)-v$(Version).zip" />
 		<RemoveDir Directories="$(SolutionDir)/dist/tmp" />
 		<GetFileHash Files="$(SolutionDir)/dist/$(TargetName)-v$(Version).zip" Algorithm="SHA256">
