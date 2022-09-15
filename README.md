@@ -16,7 +16,7 @@ and when you change skin ,you will use HPBar in this skin first
 
 ## Anim Support
 Now EnemHPBar support simple anim(Thanks Satchel Animation Code!),If you want to make hpbar anim,you should rename the images you use as `bossol_0.png`, `bossol_1.png`... and so on.
-If you do this, the mod will genrate `json` file like `bossol.json` in hpbar skin folder,the json format:
+If you do this, the mod will generate `json` file like `bossol.json` in hpbar skin folder,the json format:
 ```json
 {"fps":10.0,"loop":true}
 ``` 
