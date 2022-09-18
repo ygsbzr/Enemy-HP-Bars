@@ -30,7 +30,7 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod,IToggla
 	public static readonly string DATA_DIR = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), SPRITE_FOLDER);
 	public static string SkinPath { get { 
 			if (InstallCK && globalSettings.Intergration) {
-				return Path.Combine(SkinManager.GetCurrentSkin().getSwapperPath(), "HPBar");
+				GetCKPath();
 			}
 			return Path.Combine(EnemyHPBar.DATA_DIR, EnemyHPBar.CurrentSkin.GetId());
 		} }
@@ -121,7 +121,12 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod,IToggla
 			}
 		}
     }
-
+	public static string GetCKPath() {
+		if(Directory.Exists(Path.Combine(SkinManager.GetCurrentSkin().getSwapperPath(), "HPBar"))) {
+			return Path.Combine(SkinManager.GetCurrentSkin().getSwapperPath(), "HPBar");
+		}
+		return Path.Combine(EnemyHPBar.DATA_DIR, EnemyHPBar.CurrentSkin.GetId());
+	}
     public static Settings globalSettings = new();
 
 	public void OnLoadGlobal(Settings s) => globalSettings = s;
