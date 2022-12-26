@@ -69,8 +69,8 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod,IToggla
 		UnityEngine.SceneManagement.SceneManager.sceneLoaded += SceneManager_sceneLoaded;
 		On.PlayMakerFSM.Start += ModifyFSM;
 
-
-		canvas = CanvasUtil.CreateCanvas(RenderMode.WorldSpace, new Vector2(1920f, 1080f));
+		canvas = CanvasUtil.CreateCanvas(RenderMode.WorldSpace, new Vector2(1280f, 720f));
+		bossCanvas = CanvasUtil.CreateCanvas(RenderMode.ScreenSpaceOverlay, new Vector2(1280f, 720f));
 		bossCanvas = CanvasUtil.CreateCanvas(RenderMode.ScreenSpaceOverlay, new Vector2(1920f, 1080f));
 		canvas.GetComponent<Canvas>().sortingOrder = 1;
 		bossCanvas.GetComponent<Canvas>().sortingOrder = 1;

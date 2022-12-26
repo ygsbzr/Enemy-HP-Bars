@@ -34,22 +34,14 @@ public class HPBar : MonoBehaviour {
 
 		// On.CameraController.FadeOut += CameraController_FadeOut;
 
-		Camera camera = GameCameras.instance.mainCamera;
-		screenScale = new Vector2(camera.pixelWidth / 1280f * 0.025f, camera.pixelHeight / 720f * 0.025f);
-
 		bg_go = CanvasUtil.CreateImagePanel(EnemyHPBar.canvas, EnemyHPBar.bg,
-			new CanvasUtil.RectData(Vector2.Scale(new Vector2(EnemyHPBar.bg.texture.width, EnemyHPBar.bg.texture
-			.height), screenScale * bgScale), new Vector2(0,
-			32)));
+			new CanvasUtil.RectData(EnemyHPBar.bg.textureRect.size * bgScale * 0.025f, new Vector2(0, 32)));
 		mg_go = CanvasUtil.CreateImagePanel(EnemyHPBar.canvas, EnemyHPBar.mg,
-			new CanvasUtil.RectData(Vector2.Scale(new Vector2(EnemyHPBar.mg.texture.width, EnemyHPBar.mg.texture
-				.height), screenScale * mgScale), new Vector2(0, 32)));
+			new CanvasUtil.RectData(EnemyHPBar.mg.textureRect.size * mgScale * 0.025f, new Vector2(0, 32)));
 		fg_go = CanvasUtil.CreateImagePanel(EnemyHPBar.canvas, EnemyHPBar.fg,
-			new CanvasUtil.RectData(Vector2.Scale(new Vector2(EnemyHPBar.fg.texture.width, EnemyHPBar.fg.texture
-				.height), screenScale * fgScale), new Vector2(0, 32)));
+			new CanvasUtil.RectData(EnemyHPBar.fg.textureRect.size * fgScale * 0.025f, new Vector2(0, 32)));
 		ol_go = CanvasUtil.CreateImagePanel(EnemyHPBar.canvas, EnemyHPBar.ol,
-			new CanvasUtil.RectData(Vector2.Scale(new Vector2(EnemyHPBar.ol.texture.width, EnemyHPBar.ol.texture
-				.height), screenScale * olScale), new Vector2(0, 32)));
+			new CanvasUtil.RectData(EnemyHPBar.ol.textureRect.size * olScale * 0.025f, new Vector2(0, 32)));
 
 		bg_cr = bg_go.GetComponent<CanvasRenderer>();
 		fg_cr = fg_go.GetComponent<CanvasRenderer>();

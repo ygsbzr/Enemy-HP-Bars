@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<AssemblyTitle>EnemyHPBar</AssemblyTitle>
-		<Version>3.1.4</Version>
+		<Version>3.1.5</Version>
 		<Description>A Hollow Knight mod adding a customizable HP bar for all enemies and bosses</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<Copyright>Copyright © 2018-2022</Copyright>
@@ -20,10 +20,10 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<HKRefs Condition="$(HKRefs) == ''">D:\HKmod\1.5Moddingapi\</HKRefs>
+		<HKRefs Condition="$(HKRefs) == ''">D:/Steamself/steamapps/common/Hollow Knight/hollow_knight_Data/Managed</HKRefs>
 		<HKModdingApi Condition="$(HKModdingApi) == ''">$(HKRefs)</HKModdingApi>
-		<HKModRefs Condition="$(HKModRefs) == ''">$(HKRefs)</HKModRefs>
-		<HKModOutputPath Condition="$(HKModOutputPath) == ''">D:\Steamself\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods</HKModOutputPath>
+		<HKModRefs Condition="$(HKModRefs) == ''">$(HKRefs)/Mods</HKModRefs>
+		<HKModOutputPath Condition="$(HKModOutputPath) == ''">$(HKModRefs)</HKModOutputPath>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -35,14 +35,9 @@
 			<HintPath>$(HKModdingApi)/Assembly-CSharp.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
-		<Reference Include="CustomKnight">
-		  <HintPath>$(HKRefs)/CustomKnight.dll</HintPath>
-		</Reference>
-		<Reference Include="Newtonsoft.Json">
-		  <HintPath>$(HKRefs)/Newtonsoft.Json.dll</HintPath>
-		</Reference>
-		<Reference Include="Satchel">
-		  <HintPath>$(HKRefs)/Satchel.dll</HintPath>
+		<Reference Include="PlayMaker">
+			<HintPath>$(HKRefs)/PlayMaker.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="UnityEngine">
 			<HintPath>$(HKRefs)/UnityEngine.dll</HintPath>
@@ -72,9 +67,14 @@
 			<HintPath>$(HKModdingApi)/MonoMod.Utils.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
-		<Reference Include="PlayMaker">
-			<HintPath>$(HKRefs)/PlayMaker.dll</HintPath>
-			<Private>false</Private>
+		<Reference Include="Newtonsoft.Json">
+			<HintPath>$(HKModdingApi)/Newtonsoft.Json.dll</HintPath>
+		</Reference>
+		<Reference Include="CustomKnight">
+			<HintPath>$(HKModRefs)/Custom Knight/CustomKnight.dll</HintPath>
+		</Reference>
+		<Reference Include="Satchel">
+			<HintPath>$(HKModRefs)/Satchel/Satchel.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 
@@ -90,11 +90,8 @@
 		<ZipDirectory SourceDirectory="$(SolutionDir)/dist/tmp" DestinationFile="$(SolutionDir)/dist/$(TargetName)-v$(Version).zip" />
 		<RemoveDir Directories="$(SolutionDir)/dist/tmp" />
 		<GetFileHash Files="$(SolutionDir)/dist/$(TargetName)-v$(Version).zip" Algorithm="SHA256">
-
 			<Output TaskParameter="Items" ItemName="FilesWithHashes" />
 		</GetFileHash>
 		<Message Importance="High" Text="@(FilesWithHashes->'%(Identity): %(FileHash)')" />
-
-
 	</Target>
 </Project>
