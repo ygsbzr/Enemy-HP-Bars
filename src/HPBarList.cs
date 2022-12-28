@@ -44,7 +44,7 @@ internal class HPBarList : ISelectableSkin {
 				applying = true;
 				// apply the skin
 				BetterMenu.selectedSkin = index;
-				GameManager.instance.StartCoroutine(applyAndGoBack());
+				_ = GameManager.instance.StartCoroutine(applyAndGoBack());
 			}
 		}, Id: $"skinbutton{EnemyHPBar.SkinList[index].GetId()}");
 
@@ -56,6 +56,7 @@ internal class HPBarList : ISelectableSkin {
 				btn.isVisible = isVisible;
 			}
 		}
+
 		MenuRef.Update();
 	}
 	private static IEnumerator applyAndGoBack() {
@@ -76,9 +77,7 @@ internal class HPBarList : ISelectableSkin {
 		setSkinButtonVisibility(true);
 	}
 	internal static MenuScreen GetMenu(MenuScreen lastMenu) {
-		if (MenuRef == null) {
-			MenuRef = PrepareMenu();
-		}
+		MenuRef ??= PrepareMenu();
 
 		applying = false;
 		HPBarList.lastMenu = lastMenu;

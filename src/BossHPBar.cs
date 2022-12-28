@@ -54,20 +54,22 @@ public class BossHPBar : MonoBehaviour {
 		SetHPBarAlpha(0);
 
 		maxHP = hm.hp;
-		if (AnimJson.Animexists("bossbg")) {
-			bg_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animdic["bossbg"]);
+		if (AnimJson.AnimExists("bossbg")) {
+			bg_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animDict["bossbg"]);
 		}
-		if (AnimJson.Animexists("bossfg")) {
-			fg_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animdic["bossfg"]);
+
+		if (AnimJson.AnimExists("bossfg")) {
+			fg_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animDict["bossfg"]);
 		}
-		if (AnimJson.Animexists("bossol")) {
-			ol_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animdic["bossol"]);
+
+		if (AnimJson.AnimExists("bossol")) {
+			ol_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animDict["bossol"]);
 		}
 	}
 
 	private void SetHPBarAlpha(float alpha) {
 		if (alpha <= 0f) {
-			EnemyHPBar.ActiveBosses.Remove(gameObject);
+			_ = EnemyHPBar.ActiveBosses.Remove(gameObject);
 		} else if (!EnemyHPBar.ActiveBosses.Contains(gameObject)) {
 			EnemyHPBar.ActiveBosses.Add(gameObject);
 		}

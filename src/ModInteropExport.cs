@@ -11,7 +11,7 @@ public static class EnemyHPBarExport {
 			UObject.Destroy(bossHPBar);
 		}
 
-		go.GetAddComponent<DisableHPBar>();
+		_ = go.GetAddComponent<DisableHPBar>();
 	}
 
 	public static void EnableHPBar(GameObject go) {

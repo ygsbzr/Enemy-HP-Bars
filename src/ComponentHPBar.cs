@@ -64,17 +64,20 @@ public class HPBar : MonoBehaviour {
 		SetHPBarAlpha(0);
 		maxHP = hm.hp;
 		currHP = hm.hp;
-		if (AnimJson.Animexists("bg")) {
-			bg_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animdic["bg"]);
+		if (AnimJson.AnimExists("bg")) {
+			bg_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animDict["bg"]);
 		}
-		if (AnimJson.Animexists("fg")) {
-			fg_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animdic["fg"]);
+
+		if (AnimJson.AnimExists("fg")) {
+			fg_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animDict["fg"]);
 		}
-		if (AnimJson.Animexists("mg")) {
-			mg_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animdic["mg"]);
+
+		if (AnimJson.AnimExists("mg")) {
+			mg_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animDict["mg"]);
 		}
-		if (AnimJson.Animexists("ol")) {
-			ol_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animdic["ol"]);
+
+		if (AnimJson.AnimExists("ol")) {
+			ol_go.GetAddComponent<HPBarAnimationController>().Init(AnimJson.animDict["ol"]);
 		}
 	}
 
@@ -138,6 +141,7 @@ public class HPBar : MonoBehaviour {
 		if (currHP <= 0f) {
 			SetHPBarAlpha(0);
 		}
+
 		oldHP = hm.hp;
 	}
 
