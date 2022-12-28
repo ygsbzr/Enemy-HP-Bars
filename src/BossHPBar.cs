@@ -12,6 +12,8 @@ public class BossHPBar : MonoBehaviour {
 	private readonly float bossfgScale = EnemyHPBar.globalSettings.bossfgScale;
 	private readonly float bossolScale = EnemyHPBar.globalSettings.bossolScale;
 
+	private const float scaleFactor = 2f / 3f;
+
 	public Image health_bar;
 
 	public float maxHP;
@@ -24,16 +26,12 @@ public class BossHPBar : MonoBehaviour {
 	public void Awake() {
 		Logger.LogDebug($@"Creating Boss HP Bar for {name}");
 
-		bg_go = CanvasUtil.CreateImagePanel(EnemyHPBar.bossCanvas, EnemyHPBar.bossbg,
-			new CanvasUtil.RectData(EnemyHPBar.bossbg.textureRect.size * bossbgScale, new Vector2(0f, 32f),
-			new Vector2(0.5f, 0f),
-				new Vector2(0.5f, 0f)));
-		fg_go = CanvasUtil.CreateImagePanel(EnemyHPBar.bossCanvas, EnemyHPBar.bossfg,
-			new CanvasUtil.RectData(EnemyHPBar.bossfg.textureRect.size * bossfgScale, new Vector2(0f, 32f), new Vector2(0.5f, 0f),
-				new Vector2(0.5f, 0f)));
-		ol_go = CanvasUtil.CreateImagePanel(EnemyHPBar.bossCanvas, EnemyHPBar.bossol,
-			new CanvasUtil.RectData(EnemyHPBar.bossol.textureRect.size * bossolScale, new Vector2(0f, 32f), new Vector2(0.5f, 0f),
-				new Vector2(0.5f, 0f)));
+		bg_go = CanvasUtil.CreateImagePanel(EnemyHPBar.bossCanvas, EnemyHPBar.bossbg, new CanvasUtil.RectData(
+			EnemyHPBar.bossbg.textureRect.size * bossbgScale * scaleFactor, new Vector2(0f, 32f), new Vector2(0.5f, 0f), new Vector2(0.5f, 0f)));
+		fg_go = CanvasUtil.CreateImagePanel(EnemyHPBar.bossCanvas, EnemyHPBar.bossfg, new CanvasUtil.RectData(
+			EnemyHPBar.bossfg.textureRect.size * bossfgScale * scaleFactor, new Vector2(0f, 32f), new Vector2(0.5f, 0f), new Vector2(0.5f, 0f)));
+		ol_go = CanvasUtil.CreateImagePanel(EnemyHPBar.bossCanvas, EnemyHPBar.bossol, new CanvasUtil.RectData(
+			EnemyHPBar.bossol.textureRect.size * bossolScale * scaleFactor, new Vector2(0f, 32f), new Vector2(0.5f, 0f), new Vector2(0.5f, 0f)));
 
 		bg_cr = bg_go.GetComponent<CanvasRenderer>();
 		fg_cr = fg_go.GetComponent<CanvasRenderer>();
