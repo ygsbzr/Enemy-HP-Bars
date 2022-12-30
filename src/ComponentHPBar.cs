@@ -37,13 +37,13 @@ public class HPBar : MonoBehaviour {
 		// On.CameraController.FadeOut += CameraController_FadeOut;
 
 		bg_go = CanvasUtil.CreateImagePanel(EnemyHPBar.canvas, EnemyHPBar.bg,
-			new CanvasUtil.RectData(EnemyHPBar.bg.textureRect.size * bgScale * scaleFactor, new Vector2(0, 32)));
+			new CanvasUtil.RectData(EnemyHPBar.bg.rect.size * bgScale * scaleFactor, new Vector2(0, 32)));
 		mg_go = CanvasUtil.CreateImagePanel(EnemyHPBar.canvas, EnemyHPBar.mg,
-			new CanvasUtil.RectData(EnemyHPBar.mg.textureRect.size * mgScale * scaleFactor, new Vector2(0, 32)));
+			new CanvasUtil.RectData(EnemyHPBar.mg.rect.size * mgScale * scaleFactor, new Vector2(0, 32)));
 		fg_go = CanvasUtil.CreateImagePanel(EnemyHPBar.canvas, EnemyHPBar.fg,
-			new CanvasUtil.RectData(EnemyHPBar.fg.textureRect.size * fgScale * scaleFactor, new Vector2(0, 32)));
+			new CanvasUtil.RectData(EnemyHPBar.fg.rect.size * fgScale * scaleFactor, new Vector2(0, 32)));
 		ol_go = CanvasUtil.CreateImagePanel(EnemyHPBar.canvas, EnemyHPBar.ol,
-			new CanvasUtil.RectData(EnemyHPBar.ol.textureRect.size * olScale * scaleFactor, new Vector2(0, 32)));
+			new CanvasUtil.RectData(EnemyHPBar.ol.rect.size * olScale * scaleFactor, new Vector2(0, 32)));
 
 		bg_cr = bg_go.GetComponent<CanvasRenderer>();
 		fg_cr = fg_go.GetComponent<CanvasRenderer>();
@@ -148,7 +148,7 @@ public class HPBar : MonoBehaviour {
 	}
 
 	private void LateUpdate() {
-		objectPos = transform.position + (Vector3.up * 1.5f);
+		objectPos = transform.position + (Vector3.up * 1.5f * Screen.height / 720f);
 		MoveHPBar(objectPos);
 	}
 

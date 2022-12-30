@@ -27,11 +27,11 @@ public class BossHPBar : MonoBehaviour {
 		Logger.LogDebug($@"Creating Boss HP Bar for {name}");
 
 		bg_go = CanvasUtil.CreateImagePanel(EnemyHPBar.bossCanvas, EnemyHPBar.bossbg, new CanvasUtil.RectData(
-			EnemyHPBar.bossbg.textureRect.size * bossbgScale * scaleFactor, new Vector2(0f, 32f), new Vector2(0.5f, 0f), new Vector2(0.5f, 0f)));
+			EnemyHPBar.bossbg.rect.size * bossbgScale * scaleFactor, new Vector2(0f, 24f), new Vector2(0.5f, 0f), new Vector2(0.5f, 0f)));
 		fg_go = CanvasUtil.CreateImagePanel(EnemyHPBar.bossCanvas, EnemyHPBar.bossfg, new CanvasUtil.RectData(
-			EnemyHPBar.bossfg.textureRect.size * bossfgScale * scaleFactor, new Vector2(0f, 32f), new Vector2(0.5f, 0f), new Vector2(0.5f, 0f)));
+			EnemyHPBar.bossfg.rect.size * bossfgScale * scaleFactor, new Vector2(0f, 24f), new Vector2(0.5f, 0f), new Vector2(0.5f, 0f)));
 		ol_go = CanvasUtil.CreateImagePanel(EnemyHPBar.bossCanvas, EnemyHPBar.bossol, new CanvasUtil.RectData(
-			EnemyHPBar.bossol.textureRect.size * bossolScale * scaleFactor, new Vector2(0f, 32f), new Vector2(0.5f, 0f), new Vector2(0.5f, 0f)));
+			EnemyHPBar.bossol.rect.size * bossolScale * scaleFactor, new Vector2(0f, 24f), new Vector2(0.5f, 0f), new Vector2(0.5f, 0f)));
 
 		bg_cr = bg_go.GetComponent<CanvasRenderer>();
 		fg_cr = fg_go.GetComponent<CanvasRenderer>();
@@ -125,7 +125,7 @@ public class BossHPBar : MonoBehaviour {
 
 	private void LateUpdate() {
 		position = EnemyHPBar.ActiveBosses.IndexOf(gameObject);
-		MoveHPBar(new Vector2(objectPos.x, objectPos.y + (position * 30f)));
+		MoveHPBar(new Vector2(objectPos.x, objectPos.y + (position * (health_bar.rectTransform.sizeDelta.y + (10f * Screen.height / 720f)))));
 	}
 
 #pragma warning restore IDE0051

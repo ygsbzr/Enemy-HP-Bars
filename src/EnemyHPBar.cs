@@ -124,7 +124,7 @@ public class EnemyHPBar : Mod, IGlobalSettings<Settings>, ICustomMenuMod, IToggl
 		var texture2D = new Texture2D(1, 1);
 		_ = texture2D.LoadImage(data);
 		texture2D.anisoLevel = 0;
-		return Sprite.Create(texture2D, new Rect(0, 0, texture2D.width, texture2D.height), Vector2.zero);
+		return Sprite.Create(texture2D, new Rect(0, 0, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
 	}
 
 	private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1) => ActiveBosses = new();
