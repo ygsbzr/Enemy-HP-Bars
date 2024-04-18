@@ -105,8 +105,9 @@ public class BossHPBar : MonoBehaviour {
 
 	private void FixedUpdate() {
 		position = EnemyHPBar.ActiveBosses.IndexOf(gameObject) + 1;
-
+		maxHP = Math.Max(maxHP, hm.hp);
 		Logger.LogFine($@"Enemy {name}: currHP {hm.hp}, maxHP {maxHP}");
+
 		health_bar.fillAmount = hm.hp / maxHP;
 		if (health_bar.fillAmount < 1f && health_bar.fillAmount > 0f) {
 			float alpha = GameManager.instance.gameState == GameState.PAUSED ? 0.5f : 1;
